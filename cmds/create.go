@@ -2,6 +2,7 @@ package cmds
 
 import (
 	"fmt"
+	"os/exec"
 
 	"github.com/spf13/cobra"
 )
@@ -19,6 +20,14 @@ func createEnvCmd() *cobra.Command {
         path = args[1]
       }
       fmt.Printf("Creating a new virtual env name : %s at %s\n", name, path)
+      
+      // Creating python virtual env
+      console_cmd := exec.Command("echo", "Hello, There Partner")
+      output, err := console_cmd.Output()
+      if err != nil {
+        fmt.Println("Error :\n", err)
+      }
+      fmt.Println("Environment Created:\n", string(output))
     },
   }
 
