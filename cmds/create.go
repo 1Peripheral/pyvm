@@ -2,8 +2,9 @@ package cmds
 
 import (
 	"fmt"
-	"os/exec"
+	// "os/exec"
 
+	"github.com/1peripheral/pyvenv/services"
 	"github.com/spf13/cobra"
 )
 
@@ -13,25 +14,30 @@ func createEnvCmd() *cobra.Command {
     Use: "create [name] [path]",
     Short: "Create a new python virtual environment",
     Args: cobra.RangeArgs(1, 2),
+    PreRun: func(cmd *cobra.Command, args []string) {
+      // TODO: load the file where the envs are stored
+    },
     Run: func(cmd *cobra.Command, args []string) {
       name := args[0] 
-      path := "."
-      if len(args) > 1 {
-        path = args[1]
-      }
-      fmt.Printf("Creating a new virtual env name : %s at %s\n", name, path)
-      
-      // Creating python virtual env
-      console_cmd := exec.Command("echo", "Hello, There Partner")
-      output, err := console_cmd.Output()
+      path := args[1] 
+
+      err := services.AddEnv(name, path)
       if err != nil {
-        fmt.Println("Error :\n", err)
+        fmt.Println(err.Error())
+        return
       }
-      fmt.Println("Environment Created:\n", string(output))
+
+      fmt.Printf("Creating a new virtual env name : %s\n", name)
+      // Creating python virtual env
+      // console_cmd := exec.Command(pyCmd, "-m", "venv", path)
+      // err := console_cmd.Run()
+      // if err != nil {
+      //   fmt.Println("Error :\n", err)
+      // }
     },
   }
 
-  cmd.SetUsageTemplate("Usage : pyvenv create <name> <opt:path>\n")
+  cmd.SetUsageTemplate("Usage : create <path>\n")
 
   return cmd
 }
