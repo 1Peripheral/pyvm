@@ -7,17 +7,17 @@ import (
 	"strings"
 )
 
-func ExecuteCmd(cmd string) error {
+func ExecuteCmd(cmd string) (string, error) {
   cmdArgs := strings.Fields(cmd)
   if len(cmdArgs) < 1 {
-    return fmt.Errorf("No args given")
+    return "", fmt.Errorf("No args given")
   }
 
   consoleCmd := exec.Command(cmdArgs[0], cmdArgs[1:]...)
-  err := consoleCmd.Run()
+  output, err := consoleCmd.Output()
   if err != nil {
-    return err
+    return "", err
   }
 
-  return nil 
+  return string(output), nil 
 }

@@ -15,6 +15,11 @@ func createEnvCmd() *cobra.Command {
     Short: "Create a new python virtual environment",
     Args: cobra.RangeArgs(1, 2),
     Run: func(cmd *cobra.Command, args []string) {
+      if len(args) < 2 {
+        cmd.Usage()
+        return
+      }
+
       name := args[0] 
       path := args[1] 
 
@@ -23,15 +28,14 @@ func createEnvCmd() *cobra.Command {
         fmt.Println("Incorrect path")
       }
 
-      // err = utils.AddEnv(name, absolutePath)
       if utils.DoesEnvExist(name) {
-        fmt.Println("Environemtn with that name already exists")
+        fmt.Println("Environment with that name already exists")
         return
       }
 
-      fmt.Printf("Creating a new virtual env name : %s\n", name)
+      fmt.Printf("Virtual environment '%s' has been created\n", name)
       // Creating python virtual env
-      if err := utils.ExecuteCmd(pyCmd + " -m venv " + path); err != nil {
+      if _, err := utils.ExecuteCmd(pyCmd + " -m venv " + path); err != nil {
         fmt.Println("Encountered an error when creating the virtual env")
         fmt.Println(err.Error())
         return
@@ -44,7 +48,7 @@ func createEnvCmd() *cobra.Command {
     },
   }
 
-  cmd.SetUsageTemplate("Usage : create <path>\n")
+  cmd.SetUsageTemplate("Usage : pyvenv create [name] [path]\n")
 
   return cmd
 }

@@ -113,7 +113,7 @@ func DeleteEnv(name string) error {
 }
 
 func PrintEnvs() {
-  fmt.Println("Available Python Virtual Environments")
+  fmt.Println("Available Python Virtual Environments :")
   for name, path:= range Environments {
     fmt.Printf("%s  ->  %s\n", name, path)
   }
@@ -121,7 +121,7 @@ func PrintEnvs() {
 
 func GetPath(name string) (string, error) {
   path, exists := Environments[name]
-  if exists {
+  if !exists {
     return "", fmt.Errorf("Name not existant")
   }
   return path, nil

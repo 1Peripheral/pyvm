@@ -14,7 +14,7 @@ func checkPython() bool {
   var err error
   commands := []string{"python3", "python", "py"}
   for _, cmdName := range commands {
-    err = utils.ExecuteCmd(pyCmd + " --version")
+    _, err = utils.ExecuteCmd(pyCmd + " --version")
     if err == nil {
       pyCmd = cmdName
       return true
