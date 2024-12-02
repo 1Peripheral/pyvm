@@ -2,9 +2,9 @@ package cmds
 
 import (
 	"fmt"
-	// "os/exec"
+	"path/filepath"
 
-	"github.com/1peripheral/pyvenv/services"
+	"github.com/1peripheral/pyvenv/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -14,26 +14,33 @@ func createEnvCmd() *cobra.Command {
     Use: "create [name] [path]",
     Short: "Create a new python virtual environment",
     Args: cobra.RangeArgs(1, 2),
-    PreRun: func(cmd *cobra.Command, args []string) {
-      // TODO: load the file where the envs are stored
-    },
     Run: func(cmd *cobra.Command, args []string) {
       name := args[0] 
       path := args[1] 
 
-      err := services.AddEnv(name, path)
+      absolutePath, err := filepath.Abs(path)
       if err != nil {
-        fmt.Println(err.Error())
+        fmt.Println("Incorrect path")
+      }
+
+      // err = utils.AddEnv(name, absolutePath)
+      if utils.DoesEnvExist(name) {
+        fmt.Println("Environemtn with that name already exists")
         return
       }
 
       fmt.Printf("Creating a new virtual env name : %s\n", name)
       // Creating python virtual env
-      // console_cmd := exec.Command(pyCmd, "-m", "venv", path)
-      // err := console_cmd.Run()
-      // if err != nil {
-      //   fmt.Println("Error :\n", err)
-      // }
+      if err := utils.ExecuteCmd(pyCmd + " -m venv " + path); err != nil {
+        fmt.Println("Encountered an error when creating the virtual env")
+        fmt.Println(err.Error())
+        return
+      }
+      err = utils.AddEnv(name, absolutePath)
+      if err != nil {
+        fmt.Println(err.Error())
+        return
+      }
     },
   }
 

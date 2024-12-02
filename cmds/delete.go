@@ -1,0 +1,28 @@
+package cmds
+
+import (
+	"fmt"
+
+	"github.com/1peripheral/pyvenv/utils"
+	"github.com/spf13/cobra"
+)
+
+
+
+func deleteEnv() *cobra.Command {
+  var cmd  = &cobra.Command{
+    Use: "delete [name]",
+    Short: "lists the available python environments",
+    Run: func(cmd *cobra.Command, args []string) {
+      name := args[0]
+      err := utils.DeleteEnv(name)
+      if err != nil {
+        fmt.Println(err.Error())
+        return
+      }
+      fmt.Println("Environment " + name + " has been delete")
+    },
+  }
+
+  return cmd
+}

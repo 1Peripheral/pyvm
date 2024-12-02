@@ -3,24 +3,23 @@ package cmds
 import (
 	"fmt"
 	"os"
-	"os/exec"
 
-	"github.com/1peripheral/pyvenv/services"
+	"github.com/1peripheral/pyvenv/utils"
 	"github.com/spf13/cobra"
 )
 
 var pyCmd = "python3"
 
 func checkPython() bool {
-  commands := []string{"python", "python3", "py"}
-
+  var err error
+  commands := []string{"python3", "python", "py"}
   for _, cmdName := range commands {
-    cmd := exec.Command(cmdName, "--version")
-    err := cmd.Run()
+    err = utils.ExecuteCmd(pyCmd + " --version")
     if err == nil {
       pyCmd = cmdName
       return true
     }
+    fmt.Println(err.Error())
   }
 
   fmt.Println("Python is not installed.")
@@ -34,10 +33,10 @@ var rootcmd = &cobra.Command{
     if checkPython() == false {
       os.Exit(1)
     } 
-    services.InitEnv()
+    utils.InitEnv()
   },
   PersistentPostRun: func(cmd *cobra.Command, args []string) {
-    services.SaveChanges()
+    utils.SaveChanges()
   },
   Run: func(cmd *cobra.Command, args []string) {
     cmd.Usage();
@@ -45,6 +44,11 @@ var rootcmd = &cobra.Command{
 }
 
 func Execute() {
-  rootcmd.AddCommand(createEnvCmd())
+  rootcmd.AddCommand(
+    createEnvCmd(),
+    listEnvCmd(),
+    listPackagesCmd(),
+    deleteEnv(),
+  )
   rootcmd.Execute();
 }
