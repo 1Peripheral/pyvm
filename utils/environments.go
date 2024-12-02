@@ -1,10 +1,11 @@
-package utils 
+package utils
 
 import (
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 const ENVIRONMENTS_FILENAME = ".pyvm.json"
@@ -125,4 +126,28 @@ func GetPath(name string) (string, error) {
     return "", fmt.Errorf("Name not existant")
   }
   return path, nil
+}
+
+func ListPackages(name string) error {
+  path, err := GetPath(name)
+  if err != nil {
+    return err
+  }
+
+  switch runtime.GOOS {
+  case "linux": {
+    path = filepath.Join(path, "/bin")
+  }
+  case "windows": {
+    path = filepath.Join(path, "/Scripts")
+  }
+  default: {}
+  }
+
+  output, err := ExecuteCmd(path + "/pip list")
+  if err != nil {
+    return err
+  }
+  fmt.Println(output)
+  return nil
 }

@@ -2,10 +2,8 @@ package cmds
 
 import (
 	"fmt"
-	"path/filepath"
-	"runtime"
 
-	"github.com/1peripheral/pyvenv/utils"
+	"github.com/1peripheral/pyvm/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -20,29 +18,11 @@ func listPackagesCmd() *cobra.Command {
       }
 
       name := args[0]
-      path, err := utils.GetPath(name)
+      err := utils.ListPackages(name)
       if err != nil {
         fmt.Println(err.Error())
         return
       }
-
-      switch runtime.GOOS {
-      case "linux": {
-        path = filepath.Join(path, "/bin")
-      }
-      case "windows": {
-        path = filepath.Join(path, "/Scripts")
-        fmt.Println(path)
-      }
-      default: {}
-      }
-
-      output, err := utils.ExecuteCmd(path + "/pip list")
-      if err != nil {
-        fmt.Println(err.Error())
-        return
-      }
-      fmt.Println(output)
     },
   }
 

@@ -1,7 +1,7 @@
 package cmds
 
 import (
-	"github.com/1peripheral/pyvenv/utils"
+	"github.com/1peripheral/pyvm/utils"
 	"github.com/spf13/cobra"
 )
 

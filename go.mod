@@ -1,4 +1,4 @@
-module github.com/1peripheral/pyvenv
+module github.com/1peripheral/pyvm
 
 go 1.23.1
 

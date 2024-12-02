@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/1peripheral/pyvenv/utils"
+	"github.com/1peripheral/pyvm/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +15,7 @@ func createEnvCmd() *cobra.Command {
     Short: "Create a new python virtual environment",
     Args: cobra.RangeArgs(1, 2),
     Run: func(cmd *cobra.Command, args []string) {
+      // TODO: Prettify the output
       if len(args) < 2 {
         cmd.Usage()
         return
@@ -33,7 +34,6 @@ func createEnvCmd() *cobra.Command {
         return
       }
 
-      fmt.Printf("Virtual environment '%s' has been created\n", name)
       // Creating python virtual env
       if _, err := utils.ExecuteCmd(pyCmd + " -m venv " + path); err != nil {
         fmt.Println("Encountered an error when creating the virtual env")
@@ -45,6 +45,7 @@ func createEnvCmd() *cobra.Command {
         fmt.Println(err.Error())
         return
       }
+      fmt.Printf("Virtual environment '%s' has been created\n", name)
     },
   }
 

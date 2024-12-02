@@ -1,7 +1,7 @@
 package main
 
 import (
-  "github.com/1peripheral/pyvenv/cmds"
+  "github.com/1peripheral/pyvm/cmds"
 )
 
 
