@@ -8,13 +8,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var pyCmd = "python3"
+var pyCmd = ""
 
 func checkPython() bool {
   var err error
   commands := []string{"python3", "python", "py"}
   for _, cmdName := range commands {
-    _, err = utils.ExecuteCmd(pyCmd + " --version")
+    _, err = utils.ExecuteCmd(cmdName + " --version")
     if err == nil {
       pyCmd = cmdName
       return true
