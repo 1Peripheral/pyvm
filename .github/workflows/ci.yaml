@@ -3,8 +3,8 @@ name: Continuous Integration
 on:
   pull_request:  # Trigger on pull request events
   push:
-    # tags:
-    #   - 'v*'  # Trigger when a tag starting with 'v' is pushed
+    tags:
+      - 'v*'  # Trigger when a tag starting with 'v' is pushed
 
 jobs:
   format_code:
@@ -26,7 +26,7 @@ jobs:
     needs: format_code  # Corrected: needs is case-sensitive
     strategy:
       matrix:
-        os: [linux, macos, windows]
+        os: [linux, windows]
         go-version: [1.23.1]
     steps:
       - name: Check out repo code
