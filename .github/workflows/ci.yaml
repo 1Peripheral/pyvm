@@ -36,7 +36,7 @@ jobs:
           go-version: ${{ matrix.go-version }}
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@amster
+        uses: goreleaser/goreleaser-action@master
         with:
           version: latest 
           args: release --rm-dist
