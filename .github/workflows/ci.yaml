@@ -38,19 +38,12 @@ jobs:
       - name: Build binaries for ${{ matrix.os }}
         run: |
           GOOS=${{ matrix.os }} GOARCH=amd64 go build -ldflags='-s -w' -o pyvm-${{ matrix.os }}-amd64
-      - name: Upload release binary
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            pyvm-${{ matrix.os }}-amd64
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   release:
     needs: build_binaries  # Corrected: needs is case-sensitive
     runs-on: ubuntu-latest
     steps:
-      - name: Create release
+      - name: Create and upload releases
         uses: softprops/action-gh-release@v1
         with:
           files: |
