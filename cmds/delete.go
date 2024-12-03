@@ -22,7 +22,7 @@ func deleteEnv() *cobra.Command {
         fmt.Println(err.Error())
         return
       }
-      fmt.Println("Environment " + name + " has been delete")
+      fmt.Println("Environment " + name + " has been deleted")
     },
   }
 
