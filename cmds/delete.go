@@ -26,7 +26,7 @@ func deleteEnv() *cobra.Command {
     },
   }
 
-  cmd.SetUsageTemplate("Usage : pyvenv delete [name]\n")
+  cmd.SetUsageTemplate("Usage : pyvm delete [name]\n")
 
   return cmd
 }

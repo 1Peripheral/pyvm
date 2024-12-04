@@ -49,7 +49,7 @@ func createEnvCmd() *cobra.Command {
     },
   }
 
-  cmd.SetUsageTemplate("Usage : pyvenv create [name] [path]\n")
+  cmd.SetUsageTemplate("Usage : pyvm create [name] [path]\n")
 
   return cmd
 }
