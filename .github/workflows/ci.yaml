@@ -3,8 +3,8 @@ name: Continuous Integration
 on:
   pull_request:  # Trigger on pull request events
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   format_code:
