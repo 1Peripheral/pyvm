@@ -27,7 +27,7 @@ func checkPython() bool {
 }
 
 var rootcmd = &cobra.Command{
-  Use: "pyvenv",
+  Use: "pyvm",
   PersistentPreRun: func(cmd *cobra.Command, args []string) {
     // Checking if python exists
     if checkPython() == false {
@@ -46,9 +46,10 @@ var rootcmd = &cobra.Command{
 func Execute() {
   rootcmd.AddCommand(
     createEnvCmd(),
+    addEnv(),
+    deleteEnv(),
     listEnvCmd(),
     listPackagesCmd(),
-    deleteEnv(),
   )
   rootcmd.Execute();
 }
