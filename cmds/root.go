@@ -50,6 +50,7 @@ func Execute() {
     deleteEnv(),
     listEnvCmd(),
     listPackagesCmd(),
+    activateCmd(),
   )
   rootcmd.Execute();
 }

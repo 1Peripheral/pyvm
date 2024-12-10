@@ -12,7 +12,7 @@ import (
 func addEnv() *cobra.Command {
   var cmd  = &cobra.Command{
     Use: "add [name] [path]",
-    Short: "add an existing virtual environment to the manager",
+    Short: "Add an existing virtual environment to the manager",
     Run: func(cmd *cobra.Command, args []string) {
       if len(args) < 2 {
         cmd.Usage()
