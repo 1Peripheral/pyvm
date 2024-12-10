@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 )
@@ -149,5 +150,40 @@ func ListPackages(name string) error {
     return err
   }
   fmt.Println(output)
+  return nil
+}
+
+func ActivateEnv(name string) error {
+  venvPath, exists := Environments[name] 
+  if !exists {
+    return fmt.Errorf("Name not existant")
+  }
+
+	var activateScript string
+	var cmd *exec.Cmd
+
+	switch runtime.GOOS {
+	case "windows":
+		activateScript = fmt.Sprintf("%s\\Scripts\\activate.bat", venvPath)
+		cmd = exec.Command("cmd.exe", "/K", activateScript)
+	case "linux", "darwin":
+		activateScript = fmt.Sprintf("%s/bin/activate", venvPath)
+    fmt.Println(activateScript)
+		cmd = exec.Command("bash", "-i", "-c", fmt.Sprintf("source %s && exec $SHELL", activateScript))
+
+	default:
+    return fmt.Errorf("Unsupported OS: %s\n", runtime.GOOS)
+
+	}
+
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Stdin = os.Stdin
+
+
+	if err := cmd.Run(); err != nil {
+    return fmt.Errorf("Failed to execute command: %v\n", err)
+	}
+
   return nil
 }

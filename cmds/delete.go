@@ -10,7 +10,7 @@ import (
 func deleteEnv() *cobra.Command {
   var cmd  = &cobra.Command{
     Use: "delete [name]",
-    Short: "lists the available python environments",
+    Short: "Delete a virtual environment",
     Run: func(cmd *cobra.Command, args []string) {
       if len(args) < 1 {
         cmd.Usage()
