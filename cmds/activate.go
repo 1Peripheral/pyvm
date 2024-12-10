@@ -1,6 +1,8 @@
 package cmds
 
 import (
+	"fmt"
+
 	"github.com/1peripheral/pyvm/utils"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +17,9 @@ func activateCmd() *cobra.Command {
         return
       }
       name := args[0]
-      utils.ActivateEnv(name)
+      if err := utils.ActivateEnv(name); err != nil {
+        fmt.Println(err.Error())
+      }
     },
   }
 

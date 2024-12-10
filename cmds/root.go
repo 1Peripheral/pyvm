@@ -12,14 +12,13 @@ var pyCmd = ""
 
 func checkPython() bool {
   var err error
-  commands := []string{"python3", "python", "py"}
+  commands := []string{"python", "python3", "py"}
   for _, cmdName := range commands {
     _, err = utils.ExecuteCmd(cmdName + " --version")
     if err == nil {
       pyCmd = cmdName
       return true
     }
-    fmt.Println(err.Error())
   }
 
   fmt.Println("Python is not installed.")
