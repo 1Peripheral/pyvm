@@ -9,7 +9,7 @@ import (
 
 func deleteEnv() *cobra.Command {
   var cmd  = &cobra.Command{
-    Use: "delete [name]",
+    Use: "rm [name]",
     Short: "Delete a virtual environment",
     Run: func(cmd *cobra.Command, args []string) {
       if len(args) < 1 {
@@ -26,7 +26,7 @@ func deleteEnv() *cobra.Command {
     },
   }
 
-  cmd.SetUsageTemplate("Usage : pyvm delete [name]\n")
+  cmd.SetUsageTemplate("Usage : pyvm rm [name]\n")
 
   return cmd
 }
