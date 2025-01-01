@@ -50,6 +50,8 @@ func Execute() {
     listEnvCmd(),
     listPackagesCmd(),
     activateCmd(),
+    moveCmd(),
+    renameCmd(),
   )
   rootcmd.Execute();
 }

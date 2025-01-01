@@ -187,3 +187,29 @@ func ActivateEnv(name string) error {
 
   return nil
 }
+
+func RenameEnv(oldName, newName string) error {
+  path, err := GetPath(oldName)
+  if err != nil {
+    return err
+  }
+
+  delete(Environments, oldName)
+  AddEnv(newName, path)
+
+  return nil
+}
+
+func MoveEnv(name, newPath string) error {
+  path, err := GetPath(name)
+  if err != nil {
+    return err
+  }
+
+  err = os.Rename(path, newPath)
+  if err != nil {
+    return err
+  }
+  
+  return nil
+}
